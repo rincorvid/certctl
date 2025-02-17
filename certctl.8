@@ -38,7 +38,7 @@
 .Op Fl v
 .Ic untrusted
 .Nm
-.Op Fl nUv
+.Op Fl bBnUv
 .Op Fl D Ar destdir
 .Op Fl M Ar metalog
 .Ic rehash
@@ -56,6 +56,12 @@ applications that use OpenSSL.
 .Pp
 Flags:
 .Bl -tag -width 4n
+.It Fl b
+Create the CERTDESTFILE bundle file and CERTDESTFILELINKS symlinks to it, in addition to CERTDESTDIR.
+Bundle files are unnecessary under normal circumstances.
+You should not use this option unless you are certain you need to generate certificate bundles.
+.It Fl B
+Remove CERTDESTFILE and CERTDESTFILELINKS.
 .It Fl D Ar destdir
 Specify the DESTDIR (overriding values from the environment).
 .It Fl d Ar distbase
@@ -87,6 +93,10 @@ A symbolic link to each trusted certificate is placed in
 .Ev CERTDESTDIR
 and each untrusted certificate in
 .Ev UNTRUSTDESTDIR .
+If it exists, rebuild
+.Ev CERTDESTFILE
+from the contents of
+.Ev CERTDESTDIR .
 .It Ic untrust
 Add the specified file to the untrusted list.
 .It Ic trust
@@ -118,6 +128,15 @@ Default:
 Destination directory for symbolic links to trusted certificates.
 Default:
 .Pa <DESTDIR><DISTBASE>/etc/ssl/certs
+.It Ev CERTDESTFILE
+Location of the certificate bundle file.
+Default:
+.Pa <DESTDIR><DISTBASE>/etc/ssl/cert.pem
+.It Ev CERTDESTFILELINKS
+List of symbolic links to create that will point to CERTDESTFILE.
+Default:
+.Pa <DESTDIR><DISTBASE><LOCALBASE>/etc/ssl/cert.pem
+.Pa <DESTDIR><DISTBASE><LOCALBASE>/openssl/cert.pem
 .It Ev UNTRUSTDESTDIR
 Destination directory for symbolic links to untrusted certificates.
 Default:
