@@ -40,7 +40,17 @@ ERRORS=0
 NOOP=false
 UNPRIV=false
 VERBOSE=false
-WANTCERTDESTFILE=-1 # ternary
+WANTCERTDESTFILE="maybe"
+# WANTCERTDESTFILE has the following enumerated states:
+#
+# maybe  The rehash command will create a new CERTDESTFILE only if it
+#        already exists.
+#
+# yes    The rehash command will create a new CERTDESTFILE even if it
+#        doesn't yet exist.  Set by the -b flag.
+#
+# no     The rehash command will delete CERTDESTFILE if it exists
+#        and not create a new one.  Set by the -B flag.
 
 ############################################################ FUNCTIONS
 
@@ -283,17 +293,16 @@ cmd_rehash()
 	do_bundlelinks remove_bundlelink
 	if [ -e "$CERTDESTFILE" ] ; then
 		perform rm "$CERTDESTFILE"
-		# Conditional required to make -b/-B work.
-		if [ "$WANTCERTDESTFILE" != "0" ] ; then
-			WANTCERTDESTFILE=1
+		if [ "$WANTCERTDESTFILE" = "maybe" ] ; then
+			# CERTDESTFILE existed and -B wasn't used, so...
+			WANTCERTDESTFILE="yes"
 		fi
 	fi
 
 	do_scan create_untrusted "$UNTRUSTPATH"
 	do_scan create_trusted "$TRUSTPATH"
-
-	# Conditional required to make -b/-B work.
-	if [ "$WANTCERTDESTFILE" = "1" ] ; then
+	# CERTDESTFILE existed or -b was used
+	if [ "$WANTCERTDESTFILE" = "yes" ] ; then
 		create_bundle
 		do_bundlelinks create_bundlelink
 	fi
@@ -370,8 +379,8 @@ usage()
 
 while getopts bBD:d:M:nUv flag; do
 	case "$flag" in
-	b) WANTCERTDESTFILE=1 ;;
-	B) WANTCERTDESTFILE=0 ;;
+	b) WANTCERTDESTFILE="yes" ;;
+	B) WANTCERTDESTFILE="no" ;;
 	D) DESTDIR=${OPTARG} ;;
 	d) DISTBASE=${OPTARG} ;;
 	M) METALOG=${OPTARG} ;;
