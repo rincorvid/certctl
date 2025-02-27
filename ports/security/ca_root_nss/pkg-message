@@ -1,0 +1,17 @@
+[
+{ type: install
+  message: <<EOM
+FreeBSD does not, and can not warrant that the certification authorities
+whose certificates are included in this package have in any way been
+audited for trustworthiness or RFC 3647 compliance.
+
+Assessment and verification of trust is the complete responsibility of
+the system administrator.
+
+This package uses certctl(8) to generate and manage the certificate bundle
+files and symlinks that support root certificate discovery for software
+that either uses cryptographic libraries other than OpenSSL, or uses
+OpenSSL but does not follow recommended practice.
+EOM
+}
+]
