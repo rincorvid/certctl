@@ -1,3 +1,4 @@
 %%CERTDIR%%/ca-root-nss.crt
 @postexec certctl -b rehash
-@postunexec certctl -B rehash
+%%KEEPCAFILE%%@postunexec certctl rehash
+%%NO_KEEPCAFILE%%@postunexec certctl -B rehash
