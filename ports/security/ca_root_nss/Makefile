@@ -31,8 +31,11 @@ VERSION_NSS=	3.108
 CERTDATA_TXT_PATH=	lib/ckfw/builtins/certdata.txt
 BUNDLE_PROCESSOR=	MAca-bundle.pl
 
-SUB_FILES=	MAca-bundle.pl
+SUB_FILES=	MAca-bundle.pl pkg-message
 SUB_LIST=	VERSION_NSS=${VERSION_NSS}
+
+KEEPCAFILE_SUB_LIST=		KEEPCAFILE=""
+KEEPCAFILE_SUB_LIST_OFF=	KEEPCAFILE="@comment "
 
 do-build:
 	@${SETENV} PATH=${LOCALBASE}/bin:$${PATH} \

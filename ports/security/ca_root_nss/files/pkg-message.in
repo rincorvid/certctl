@@ -14,4 +14,15 @@ that either uses cryptographic libraries other than OpenSSL, or uses
 OpenSSL but does not follow recommended practice.
 EOM
 }
+%%KEEPCAFILE%%{ type: remove
+%%KEEPCAFILE%%  message: <<EOM
+%%KEEPCAFILE%%If you are certain you no longer need the cert.pem file and symlinks
+%%KEEPCAFILE%%created by certctl(8), you can run the following command to remove them:
+%%KEEPCAFILE%%
+%%KEEPCAFILE%%	certctl -B refresh
+%%KEEPCAFILE%%
+%%KEEPCAFILE%%See the certctl(8) man page for more details, including which files will
+%%KEEPCAFILE%%be removed.
+%%KEEPCAFILE%%EOM
+%%KEEPCAFILE%%}
 ]
