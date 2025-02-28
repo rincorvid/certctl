@@ -1,0 +1,2 @@
+A modified version of FreeBSD's certctl(8) that adds the ability to
+generate CAfile bundles in addition to CApath.

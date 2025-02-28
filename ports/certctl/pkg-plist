@@ -1,0 +1,4 @@
+sbin/certctl
+share/man/man8/certctl.8.gz
+/usr/sbin/certctl
+/usr/share/man/man8/certctl.8.gz
